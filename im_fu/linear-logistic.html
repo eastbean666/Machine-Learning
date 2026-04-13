@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>线性回归 & 逻辑回归 | Machine Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      line-height: 1.75;
+      padding: 2rem 1rem 4rem;
+    }
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .back {
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      color: #8b5cf6;
+      text-decoration: none;
+      border: 1px solid #30363d;
+      padding: .45rem .8rem;
+      border-radius: 10px;
+      background: #161b22;
+    }
+    .back:hover { border-color: #8b5cf6; }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin-bottom: .5rem;
+    }
+    .subtitle {
+      color: #8b949e;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    h2 { margin-bottom: .6rem; font-size: 1.3rem; color: #c9d1d9; }
+    h3 { margin: .8rem 0 .4rem; font-size: 1.05rem; color: #c9d1d9; }
+    p, li { color: #b7c0cb; }
+    ul { padding-left: 1.2rem; margin-top: .35rem; }
+    code {
+      background: #0b1220;
+      border: 1px solid #263042;
+      padding: .1rem .35rem;
+      border-radius: 6px;
+      color: #93c5fd;
+    }
+    pre {
+      background: #0b1220;
+      border: 1px solid #263042;
+      border-radius: 10px;
+      padding: .9rem;
+      overflow-x: auto;
+      margin-top: .6rem;
+    }
+    .tip {
+      border-left: 4px solid #8b5cf6;
+      background: rgba(139,92,246,.08);
+      padding: .8rem .9rem;
+      border-radius: 8px;
+      margin-top: .6rem;
+      color: #d8c8ff;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <a class="back" href="../index.html">← 返回首页</a>
+
+    <h1>🔢 线性回归 & 逻辑回归</h1>
+    <p class="subtitle">从“预测连续值”到“二分类决策”，掌握最基础也最重要的两类监督学习模型。</p>
+
+    <section class="card">
+      <h2>一、线性回归（Linear Regression）</h2>
+      <p>目标：预测一个连续值（如房价、温度、销量）。</p>
+      <h3>模型形式</h3>
+      <p><code>y = w1*x1 + w2*x2 + ... + b</code></p>
+      <h3>损失函数</h3>
+      <p>常用均方误差 MSE：</p>
+      <p><code>MSE = (1/n) * Σ(y_pred - y_true)^2</code></p>
+      <h3>优化方法</h3>
+      <ul>
+        <li>正规方程（小数据可用）</li>
+        <li>梯度下降（更通用）</li>
+      </ul>
+      <div class="tip">适合线性关系明显的数据；如果关系非线性，需要特征工程或换模型。</div>
+    </section>
+
+    <section class="card">
+      <h2>二、逻辑回归（Logistic Regression）</h2>
+      <p>目标：做分类（最常见是二分类，如“是/否”、“好/坏”）。</p>
+      <h3>核心思想</h3>
+      <p>先做线性组合，再经过 Sigmoid 映射到 0~1 概率：</p>
+      <p><code>p = 1 / (1 + e^(-z)),  z = w*x + b</code></p>
+      <h3>损失函数</h3>
+      <p>常用对数损失（交叉熵 Binary Cross-Entropy）。</p>
+      <h3>分类规则</h3>
+      <p>通常用阈值 0.5：<code>p >= 0.5</code> 判为正类，否则负类。</p>
+      <div class="tip">虽然叫“回归”，但逻辑回归本质上是分类模型。</div>
+    </section>
+
+    <section class="card">
+      <h2>三、两者对比</h2>
+      <ul>
+        <li><strong>输出</strong>：线性回归输出连续值；逻辑回归输出概率/类别</li>
+        <li><strong>任务</strong>：线性回归用于回归；逻辑回归用于分类</li>
+        <li><strong>损失</strong>：MSE vs 交叉熵</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>四、最小 Python 示例（scikit-learn）</h2>
+      <h3>1) 线性回归</h3>
+      <pre><code>from sklearn.linear_model import LinearRegression
+
+X = [[1], [2], [3], [4]]
+y = [2, 4, 6, 8]
+
+model = LinearRegression()
+model.fit(X, y)
+print(model.coef_, model.intercept_)
+print(model.predict([[5]]))</code></pre>
+
+      <h3>2) 逻辑回归</h3>
+      <pre><code>from sklearn.linear_model import LogisticRegression
+
+X = [[0], [1], [2], [3]]
+y = [0, 0, 1, 1]
+
+clf = LogisticRegression()
+clf.fit(X, y)
+print(clf.predict([[1.5], [2.5]]))
+print(clf.predict_proba([[1.5], [2.5]]))</code></pre>
+    </section>
+  </main>
+</body>
+</html>
