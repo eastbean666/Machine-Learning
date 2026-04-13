@@ -160,14 +160,18 @@
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
-    .card {
-      background: rgba(22,27,34,.7);
-      border: 1px solid #21262d;
-      border-radius: 16px;
-      padding: 2rem;
-      transition: transform .25s, border-color .25s, box-shadow .25s;
-      backdrop-filter: blur(6px);
-    }
+.card {
+  background: rgba(22,27,34,.7);
+  border: 1px solid #21262d;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+  backdrop-filter: blur(6px);
+
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
     .card:hover {
       transform: translateY(-4px);
       border-color: #8b5cf6;
@@ -326,11 +330,11 @@
     <p class="section-subtitle">涵盖机器学习核心领域的学习笔记与代码实现</p>
 
     <div class="topics-grid">
-      <div class="card">
-        <div class="card-icon">🔢</div>
-        <h3>线性回归 &amp; 逻辑回归</h3>
-        <p>从最小二乘法到梯度下降，理解回归分析的基本原理与优化方法。</p>
-      </div>
+     <a class="card" href="./im_fu/linear-logistic.html">
+  <div class="card-icon">🔢</div>
+  <h3>线性回归 &amp; 逻辑回归</h3>
+  <p>从最小二乘法到梯度下降，���解回归分析的基本原理与优化方法。</p>
+   </a>
       <div class="card">
         <div class="card-icon">🌳</div>
         <h3>决策树 &amp; 随机森林</h3>
